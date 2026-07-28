@@ -1,123 +1,48 @@
+<div align="center">
 
-🗡️ Metin2 Stone Farm Bot
-Bu proje, görüntü işleme teknikleri kullanarak Metin2 oyununda otomatik Metin taşı kesimi ve farm yapan Python tabanlı bir otomasyon botudur.
+# 🗡️ Metin2 Stone Farm Bot
 
-⚠️ Önemli Performans Uyarısı: Bot, ekran üzerindeki görüntüleri işlemek ve nesneleri tespit etmek için yüksek CPU gücüne ihtiyaç duyar. Düşük donanımlı bilgisayarlarda yavaş çalışabilir veya düzgün çalışmayabilir.
+**Python ve Bilgisayarlı Görü (Computer Vision) kullanılarak geliştirilmiş otomatik Metin Taş kesim otomasyonu.**
 
-🛠️ Nasıl Çalışır?
-Hesabınıza otomatik olarak giriş yapar (Login).
+[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/)
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green.svg)](https://opencv.org/)
+[![Status](https://img.shields.io/badge/status-Archive-orange.svg)](#)
 
-Doğru haritaya ışınlanır.
+[Özellikler](#-özellikler) • [Gereksinimler](#-gereksinimler) • [Kurulum](#-kurulum--çalıştırma) • [Yapılandırma](#-yapılandırma-configuration) • [Sınırlamalar](#-bilinen-sınırlamalar)
 
-Kamerayı döndürerek etrafta Metin taşı arar.
+---
 
-Metin taşını bulup keser ve düşen eşyaları (drop) toplar.
+</div>
 
-Karakterin ölüp ölmediğini, takılıp takılmadığını veya oyundan atılıp atılmadığını (kick) kontrol eder.
+> **⚠️ Donanım Uyarısı:** Bot, ekran üzerindeki görüntüleri anlık işlemek için yüksek CPU gücü tüketir. Düşük donanımlı sistemlerde gecikmeler yaşanabilir.
 
-📌 Bilinmesi Gerekenler & Sınırlamalar
-PVP Sunucu Uyumluluğu: Rubinum gibi bazı sunucular bu tür komut dizilerinin (script) oyuna girdi göndermesini engellemiştir. Bot her PVP / Resmi sunucuda çalışmayabilir (İlk olarak Rubinum için geliştirilmiştir).
+<br/>
 
-Gereksinimler: Oyuna giriş bilgilerini kaydedebilen bir istemci (client), istediğiniz haritaya ışınlayan bir ışınlanma yüzüğü ve taş kesimi için özel bir harita gereklidir. Bot, haritada rastgele gezerek taş arayacak kadar gelişmiş değildir.
+## 🎯 Özellikler
 
-Çözünürlük: Önerilen oyun çözünürlüğü 1024x768'dir. 800x600 çözünürlükte arayüz elemanları üst üste binebilir; daha yüksek çözünürlükler ise görüntü işleme süresini artırır.
+* 🔐 **Otomatik Oturum:** Hesap bilgilerini kullanarak karakter seçimi ve oyuna giriş yapar.
+* 🗺️ **Harita Gezinimi:** Belirlenen rotaları izleyerek hedef haritaya ışınlanır.
+* 👁️ **Nesne Tespiti:** Ekrandaki Metin Taşlarını görüntü işleme teknikleriyle algılar.
+* ⚔️ **Savaş & Toplama:** Taşa odaklanıp kesim gerçekleştirir ve düşen ganimetleri (*drop*) toplar.
+* 🛡️ **Güvenlik Kontrolleri:** Karakterin ölme, takılma veya oyundan düşme (*kick*) durumlarını otomatik tespit eder.
+* 🖥️ **Multi-Client:** Aynı anda birden fazla oyun penceresini paralel olarak yönetebilir.
 
-At / Binek: Botun sorunsuz çalışması için karakterinizin bir ata/bineğe sahip olması ve üzerine binmiş olması gerekir.
+<br/>
 
-Çoklu İstemci (Multi-Client): Bot, aynı anda birden fazla oyun istemcisini yönetebilir.
+## 💻 Gereksinimler & Bağımlılıklar
 
-İşletim Sistemi: Bot içerisinde kullanılan bazı kütüphaneler sadece Windows üzerinde çalışır.
+* **İşletim Sistemi:** Windows *(Sadece Windows API kütüphaneleri desteklenmektedir)*
+* **Python:** v3.7 veya üzeri
+* **Önerilen Ekran Çözünürlüğü:** `1024x768` *(800x600 çözünürlükte arayüz elemanları çakışabilir)*
 
-Geliştirme Durumu: Proje modülerliği düşük ve bazı ayarları kod içerisinde sabitleşmiş (hardcoded) durumdadır.
+### Gerekli Python Kütüphaneleri
+```bash
+pip install pillow cv2 opencv-python pyautogui numpy keyboard imutils pytesseract
 
-⚙️ Yapılandırma (Configuration)
-Botu doğru şekilde konfigüre etmek için 3 ana klasörün mantığını anlamak gerekir: clients, maps ve relatives.
-
-1. relatives (Göreceli Konumlar)
-Bu dosya, belirli ekran çözünürlükleri için piksel koordinatlarını içerir. Bot, varsayılan bir ekran konumunu referans alarak sizin ekranınızdaki minimap, can barı gibi elemanların yerini hesaplar.
-
-Göreceli Konum Hesaplama Mantığı (bmath.py):
-
-Python
-def get_relative(top_left, new_top_left, def_pos):
+🚀 Kurulum & ÇalıştırmaOyun istemcilerini Login (Giriş) ekranında hazır tutun.Terminal/Komut satırını açarak projeyi başlatın:Bashpython main.py
+Bot çalışmaya başladığında klavye ve fare müdahalesinde bulunmayın.Durdurmak için: Terminal penceresine geçip Ctrl + C kombinasyonunu kullanın.⚙️ Yapılandırma (Configuration)Botun doğru çalışabilmesi için 3 temel konfigürasyon dizini kullanılır:DizinAçıklamarelatives/Ekran çözünürlüğünüze göre UI elemanlarının (minimap, hp bar vb.) pikselsel konum bağıntıları.maps/Hedef harita bilgileri, gezinme tıklamaları ve tanınacak taş görselleri (icons/).clients/Giriş yapılacak hesap ID'leri, kanal (CH), kısayol tuşları ve skill ayarları.Bot, bmath.py içerisindeki algoritma ile referans alınan ekran koordinatlarından sizin ekranınızdaki elemanların yerini türetir:Pythondef get_relative(top_left, new_top_left, def_pos):
     dif = (def_pos[0] - top_left[0], def_pos[1] - top_left[1])
     pos = (new_top_left[0] + dif[0], new_top_left[1] + dif[1])
     return pos
-top_left: Konfigürasyondaki referans istemcinin sol üst konumu.
-
-new_top_left: Sizin gerçek istemcinizin sol üst konumu.
-
-def_pos: Bulunmak istenen elemanın referans konumu.
-
-Kendi Çözünürlüğünüz İçin Konfigürasyon Oluşturma:
-Görsel düzenleme programı (örneğin Paint.NET) kullanarak ekran görüntülerinizden şu koordinatları alıp eklemelisiniz:
-
-top-left: Oyun pencerelisinin en sol üst piksel noktası.
-
-window-size: İstemcinin pencere boyutu.
-
-stone-bar-close: Hedef can barındaki kapatma (X) butonu.
-
-mini-map: Minimap kapatma butonu.
-
-hp & hp-rectangle: Taşın kalan canını okumak için oluşturulan dikdörtgen alanı.
-
-revive-here & revive-rectangle: Karakter öldüğünde "Burada Yeniden Doğ" butonunun konumu ve alanı.
-
-account1-12: Giriş ekranındaki kayıtlı hesap konumları.
-
-channel1-8: Kanal (CH) seçim butonları.
-
-2. maps (Harita Ayarları)
-name: Haritanın adı.
-
-stone-sample: Aranacak Metin taşının görsellerinin bulunduğu dizin path'i (icons klasöründeki gibi taşın isminin ekran görüntüsü olması önerilir).
-
-hl & threshold: Görüntü eşleştirme (Object Detection) hassasiyet değerleri.
-
-navigation: İlgili haritaya gitmek için menüde yapılması gereken tıklama sırası.
-
-3. clients (İstemci Ayarları)
-Her farklı istemci (client) için ayrı bir konfigürasyon dosyası kullanılır:
-
-account: Giriş yapılacak id, channel, map ve username bilgileri.
-
-navigation: Windows görev çubuğundaki yer (task-bar), pencere konumu (top-left) ve ışınlanma yüzüğünün kısayol tuşu (ring -> 1, 2, f1 vb.).
-
-skills: Hava Kılıcı, Öfke veya Şaman kutsamaları gibi otomatik basılacak yetenekler.
-
-horse-skills: Karakter takıldığında kurtulmak için kullanılacak binek yetenekleri.
-
-🚀 Çalıştırma ve Kurulum
-Gereksinimler
-Sisteminizde Python 3.7 veya üzeri bir sürüm yüklü olmalıdır.
-
-Komut satırını (CMD) açarak gerekli kütüphaneleri yükleyin:
-
-Bash
-pip install pillow cv2 opencv-python pyautogui numpy keyboard imutils pytesseract
-Botu Başlatma
-Kullanmak istediğiniz oyun istemcilerini giriş ekranında (Login screen) açık tutun.
-
-Komut satırına şu komutu yazarak botu başlatın:
-
-Bash
-python main.py
-Bot çalışmaya başladıktan sonra klavye ve farenize dokunmayın.
-
-Botu durdurmak için CMD penceresine gelip Ctrl + C kombinasyonunu kullanın.
-
-Döngü Sayısı: Bot varsayılan olarak 5000 döngü boyunca çalışır. Süresiz çalıştırmak için main.py içindeki while loop < max_loops: satırını while True: olarak değiştirebilirsiniz.
-
-🛠️ Ek Araçlar (Scripts)
-Proje içerisinde yardımcı iki adet ek Python dosyası bulunmaktadır:
-
-cords.py: Ekranda tıkladığınız herhangi bir noktanın piksel koordinatlarını terminale yazdırır (Konfigürasyon hazırlarken koordinat bulmak için kullanılır).
-
-xp.py: Otomatik olarak Boşluk (Space) tuşuna basan ve her 10 saniyede bir Cesaret Pelerini (2 tuşu) kullanan basit bir XP / Slot farm botudur.
-
-Tuşu değiştirmek için: binput.press_button('2')
-
-Pelerin basma sıklığını değiştirmek için: sleep(10)
-
-İstemciyi öne getirmek için görev çubuğu konumu: task_bar = (1291, 1062)
+top_left: Referans konfigürasyondaki sol üst piksel.new_top_left: Oyununuzun aktif pencere sol üst pikseli.def_pos: Aranacak buton/arayüz elemanının referans koordinatı.🛠️ Ek AraçlarProje dizininde yer alan yardımcı scriptler:📍 cords.py: Ekranda tıklandığı noktanın piksel koordinatlarını terminale yazdırır (Konfigürasyon hazırlığı için).⚡ xp.py: Otomatik olarak Space (Saldırı) ve belirli aralıklarla Cesaret Pelerini basan hafif farm script'i.⚠️ Bilinen SınırlamalarPVP Sunucu Korumaları: Rubinum gibi bazı sunucularda kullanılan anti-cheat/input engelleme sistemleri botun komut göndermesini engelleyebilir.Geliştirme Durumu: Kod mimarisinde bazı değerler sabitleşmiş (hardcoded) durumdadır ve modülerlik kısıtlıdır.
