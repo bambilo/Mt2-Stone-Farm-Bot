@@ -36,13 +36,45 @@
 * **Python:** v3.7 veya üzeri
 * **Önerilen Ekran Çözünürlüğü:** `1024x768` *(800x600 çözünürlükte arayüz elemanları çakışabilir)*
 
-### Gerekli Python Kütüphaneleri
-```bash
-pip install pillow cv2 opencv-python pyautogui numpy keyboard imutils pytesseract
+🚀 Kurulum & Çalıştırma
+Oyun istemcilerini Login (Giriş) ekranında hazır tutun.
 
-🚀 Kurulum & ÇalıştırmaOyun istemcilerini Login (Giriş) ekranında hazır tutun.Terminal/Komut satırını açarak projeyi başlatın:Bashpython main.py
-Bot çalışmaya başladığında klavye ve fare müdahalesinde bulunmayın.Durdurmak için: Terminal penceresine geçip Ctrl + C kombinasyonunu kullanın.⚙️ Yapılandırma (Configuration)Botun doğru çalışabilmesi için 3 temel konfigürasyon dizini kullanılır:DizinAçıklamarelatives/Ekran çözünürlüğünüze göre UI elemanlarının (minimap, hp bar vb.) pikselsel konum bağıntıları.maps/Hedef harita bilgileri, gezinme tıklamaları ve tanınacak taş görselleri (icons/).clients/Giriş yapılacak hesap ID'leri, kanal (CH), kısayol tuşları ve skill ayarları.Bot, bmath.py içerisindeki algoritma ile referans alınan ekran koordinatlarından sizin ekranınızdaki elemanların yerini türetir:Pythondef get_relative(top_left, new_top_left, def_pos):
-    dif = (def_pos[0] - top_left[0], def_pos[1] - top_left[1])
-    pos = (new_top_left[0] + dif[0], new_top_left[1] + dif[1])
-    return pos
-top_left: Referans konfigürasyondaki sol üst piksel.new_top_left: Oyununuzun aktif pencere sol üst pikseli.def_pos: Aranacak buton/arayüz elemanının referans koordinatı.🛠️ Ek AraçlarProje dizininde yer alan yardımcı scriptler:📍 cords.py: Ekranda tıklandığı noktanın piksel koordinatlarını terminale yazdırır (Konfigürasyon hazırlığı için).⚡ xp.py: Otomatik olarak Space (Saldırı) ve belirli aralıklarla Cesaret Pelerini basan hafif farm script'i.⚠️ Bilinen SınırlamalarPVP Sunucu Korumaları: Rubinum gibi bazı sunucularda kullanılan anti-cheat/input engelleme sistemleri botun komut göndermesini engelleyebilir.Geliştirme Durumu: Kod mimarisinde bazı değerler sabitleşmiş (hardcoded) durumdadır ve modülerlik kısıtlıdır.
+Terminal/Komut satırını açarak projeyi başlatın:
+python main.py
+
+Bot çalışmaya başladığında klavye ve fare müdahalesinde bulunmayın.
+
+Durdurmak için: Terminal penceresine geçip Ctrl + C kombinasyonunu kullanın.
+
+⚙️ Yapılandırma (Configuration)
+Botun doğru çalışabilmesi için 3 temel konfigürasyon dizini kullanılır:
+
+• relatives/ : Ekran çözünürlüğünüze göre UI elemanlarının (minimap, hp bar vb.) pikselsel konum bağıntıları.
+• maps/ : Hedef harita bilgileri, gezinme tıklamaları ve tanınacak taş görselleri (icons/).
+• clients/ : Giriş yapılacak hesap ID'leri, kanal (CH), kısayol tuşları ve skill ayarları.
+
+🔍 Göreceli Konum Hesaplama Mantığı:
+Bot, bmath.py içerisindeki algoritma ile referans alınan ekran koordinatlarından sizin ekranınızdaki elemanların yerini türetir:
+
+def get_relative(top_left, new_top_left, def_pos):
+dif = (def_pos[0] - top_left[0], def_pos[1] - top_left[1])
+pos = (new_top_left[0] + dif[0], new_top_left[1] + dif[1])
+return pos
+
+• top_left: Referans konfigürasyondaki sol üst piksel.
+• new_top_left: Oyununuzun aktif pencere sol üst pikseli.
+• def_pos: Aranacak buton/arayüz elemanının referans koordinatı.
+
+🛠️ Ek Araçlar
+Proje dizininde yer alan yardımcı scriptler:
+
+• 📍 cords.py: Ekranda tıklandığı noktanın piksel koordinatlarını terminale yazdırır (Konfigürasyon hazırlığı için).
+• ⚡ xp.py: Otomatik olarak Space (Saldırı) ve belirli aralıklarla Cesaret Pelerini basan hafif farm script'i.
+
+⚠️ Bilinen Sınırlamalar
+• PVP Sunucu Korumaları: Rubinum gibi bazı sunucularda kullanılan anti-cheat/input engelleme sistemleri botun komut göndermesini engelleyebilir.
+• Geliştirme Durumu: Kod mimarisinde bazı değerler sabitleşmiş (hardcoded) durumdadır ve modülerlik kısıtlıdır.
+
+
+
+
