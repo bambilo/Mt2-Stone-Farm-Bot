@@ -1,90 +1,328 @@
-<div align="center">
+# Metin2 Stone-Farm Bot
 
+Python tabanlı, görüntü işleme (Image Processing) teknikleri kullanarak **Metin2** oyununda Metin taşlarını otomatik olarak tespit eden, kesen ve farm sürecini yöneten bir otomasyon botudur.
 
-# 🗡️ Metin2 Stone Farm Bot
-
-**Python ve Görüntü işleme kullanılarak geliştirilmiş otomatik Metin Taş kesim otomasyonu.**
-
-[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/)
-
-[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
-
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green.svg)](https://opencv.org/)
-
-[![Status](https://img.shields.io/badge/status-Archive-orange.svg)](#)
-
-
-[Özellikler](#-özellikler) • [Gereksinimler](#-gereksinimler) • [Kurulum](#-kurulum--çalıştırma) • [Yapılandırma](#-yapılandırma-configuration) • [Sınırlamalar](#-bilinen-sınırlamalar)
+> **Not:** Bot, ekran görüntülerini sürekli analiz ederek çalıştığı için yüksek CPU kullanımı gerektirir. Düşük donanımlı sistemlerde performans düşebilir veya bot beklenen verimlilikte çalışmayabilir.
 
 ---
 
-</div>
+# Özellikler
 
-⚠️ Donanım Uyarısı: Bot, ekran üzerindeki görüntüleri anlık işlemek için yüksek CPU gücü tüketir. Düşük donanımlı sistemlerde gecikmeler yaşanabilir.
+* 🤖 Otomatik hesap girişi
+* 🗺️ Belirlenen haritaya otomatik ışınlanma
+* 🔍 Kamera döndürerek Metin taşı arama
+* ⚔️ Taşı otomatik hedefleme ve kırma
+* 🎁 Düşen eşyaları toplama
+* ❤️ Ölüm, takılma ve bağlantı kopması kontrolleri
+* 🖥️ Aynı anda birden fazla oyun istemcisini yönetebilme (Multi-Client)
+* 🧩 Modüler yapılandırma sistemi
 
-🎯 Özellikler
+---
 
-🔐 Otomatik Oturum: Hesap bilgilerini kullanarak karakter seçimi ve oyuna giriş yapar.
+# Çalışma Mantığı
 
-🗺️ Harita Gezinimi: Belirlenen rotaları izleyerek hedef haritaya ışınlanır.
+Bot aşağıdaki adımları sırasıyla gerçekleştirir:
 
-👁️ Nesne Tespiti: Ekrandaki Metin Taşlarını görüntü işleme teknikleriyle algılar.
+### 1. Giriş
 
-⚔️ Savaş & Toplama: Taşa odaklanıp kesim gerçekleştirir ve düşen ganimetleri (drop) toplar.
+Kayıtlı hesabınıza otomatik giriş yapar.
 
-🛡️ Güvenlik Kontrolleri: Karakterin ölme, takılma veya oyundan düşme (kick) durumlarını otomatik tespit eder.
+### 2. Işınlanma
 
-🖥️ Multi-Client: Aynı anda birden fazla oyun penceresini paralel olarak yönetebilir.
+Belirlenen farm haritasına ışınlanır.
 
-💻 Gereksinimler & Bağımlılıklar
+### 3. Metin Taşı Arama
 
-İşletim Sistemi: Windows (Sadece Windows API kütüphaneleri desteklenmektedir)
+Karakter bulunduğu noktada kamerayı döndürerek çevredeki Metin taşlarını görüntü işleme ile tespit eder.
 
-Python: v3.7 veya üzeri
+### 4. Saldırı ve Toplama
 
-Önerilen Ekran Çözünürlüğü: 1024x768 (800x600 çözünürlükte arayüz elemanları çakışabilir)
+Bulunan Metin taşını hedef alır, kırar ve düşen eşyaları toplar.
 
-🚀 Kurulum & Çalıştırma
+### 5. Durum Kontrolü
 
-Oyun istemcilerini Login (Giriş) ekranında hazır tutun.
+Bot çalışma boyunca sürekli olarak;
 
-Terminal/Komut satırını açarak projeyi başlatın:
-python main.py
+* Karakter öldü mü?
+* Karakter sıkıştı mı?
+* Oyun bağlantısı koptu mu?
 
-Bot çalışmaya başladığında klavye ve fare müdahalesinde bulunmayın.
+kontrollerini yaparak gerekli işlemleri uygular.
 
-Durdurmak için: Terminal penceresine geçip Ctrl + C kombinasyonunu kullanın.
+---
 
-⚙️ Yapılandırma (Configuration)
+# Önemli Notlar
 
-Botun doğru çalışabilmesi için 3 temel konfigürasyon dizini kullanılır:
+## Sunucu Koruma Sistemleri
 
-• relatives/ : Ekran çözünürlüğünüze göre UI elemanlarının (minimap, hp bar vb.) pikselsel konum bağıntıları.
-• maps/ : Hedef harita bilgileri, gezinme tıklamaları ve tanınacak taş görselleri (icons/).
-• clients/ : Giriş yapılacak hesap ID'leri, kanal (CH), kısayol tuşları ve skill ayarları.
+Rubinum gibi bazı sunucu altyapıları, istemciye gönderilen sentetik klavye ve fare girdilerini engellemektedir. Bu tür korumalara sahip sunucularda bot çalışmayabilir.
 
-🔍 Göreceli Konum Hesaplama Mantığı:
-Bot, bmath.py içerisindeki algoritma ile referans alınan ekran koordinatlarından sizin ekranınızdaki elemanların yerini türetir:
+---
 
+## Sunucu Uyumluluğu
+
+Bot, ağırlıklı olarak **Rubinum altyapısı** için geliştirilmiştir.
+
+Çalışabilmesi için istemcide aşağıdaki özelliklerin bulunması önerilir:
+
+* Hesap bilgilerinin kayıtlı olması
+* Işınlanma yüzüğünün bulunması
+* Farm yapılacak haritanın uygun yapıda olması
+
+Her PvP sunucusunda doğrudan çalışacağı garanti edilmez.
+
+---
+
+## Arama Sınırı
+
+Bot, gelişmiş bir yol bulma (Pathfinding) algoritmasına sahip değildir.
+
+Sadece bulunduğu konumdan kamerayı döndürerek Metin taşı araması yapmaktadır.
+
+---
+
+## Çözünürlük
+
+Önerilen oyun çözünürlüğü:
+
+```
+1024 x 768
+```
+
+### 800×600
+
+Arayüz elemanları üst üste geldiği için nesne tespiti hatalı olabilir.
+
+### Daha yüksek çözünürlükler
+
+Görüntü işleme süresi uzayacağı için performans düşebilir.
+
+---
+
+## Binek / At
+
+Botun stabil çalışabilmesi için karakterinizin **ata veya bineğe binmiş** olması gerekmektedir.
+
+---
+
+## Multi-Client
+
+Bot aynı anda birden fazla oyun istemcisini yönetebilir.
+
+Her istemci için ayrı yapılandırma dosyası kullanılmaktadır.
+
+---
+
+## İşletim Sistemi
+
+Projede yalnızca **Windows** üzerinde çalışan bazı kütüphaneler kullanılmıştır.
+
+Linux ve macOS desteği bulunmamaktadır.
+
+---
+
+## Geliştirme Durumu
+
+Proje halen geliştirilmektedir.
+
+Mevcut sürümde bazı ayarlar sabit (hardcoded) tanımlanmıştır ve yapılandırma süreci tamamen otomatik değildir.
+
+---
+
+# Yapılandırma (Configuration)
+
+Botun doğru şekilde çalışabilmesi için proje içerisindeki üç temel yapılandırma dizininin anlaşılması gerekir.
+
+```
+clients/
+maps/
+relatives/
+```
+
+---
+
+# 1. relatives
+
+Bu dizin, farklı ekran çözünürlükleri için oyun arayüzündeki elemanların göreceli konumlarını hesaplar.
+
+## Hesaplama Mantığı
+
+```python
 def get_relative(top_left, new_top_left, def_pos):
-dif = (def_pos[0] - top_left[0], def_pos[1] - top_left[1])
-pos = (new_top_left[0] + dif[0], new_top_left[1] + dif[1])
-return pos
+    dif = (def_pos[0] - top_left[0], def_pos[1] - top_left[1])
+    pos = (new_top_left[0] + dif[0], new_top_left[1] + dif[1])
+    return pos
+```
 
-top_left: Referans konfigürasyondaki sol üst piksel.
+### Parametreler
 
-new_top_left: Oyununuzun aktif pencere sol üst pikseli.
+| Parametre      | Açıklama                                                          |
+| -------------- | ----------------------------------------------------------------- |
+| `top_left`     | Varsayılan konfigürasyondaki oyun penceresinin sol üst koordinatı |
+| `new_top_left` | Mevcut istemcinizin sol üst koordinatı                            |
+| `def_pos`      | Hesaplanacak UI elemanının varsayılan koordinatı                  |
 
-def_pos: Aranacak buton/arayüz elemanının referans koordinatı.
+---
 
-🛠️ Ek Araçlar
-Proje dizininde yer alan yardımcı scriptler:
+## Yeni Bir relatives Konfigürasyonu Oluşturma
 
-📍 cords.py: Ekranda tıklandığı noktanın piksel koordinatlarını terminale yazdırır (Konfigürasyon hazırlığı için).
+Farklı çözünürlük kullanıyorsanız aşağıdaki adımları izleyin.
 
-⚡ xp.py: Otomatik olarak Space (Saldırı) ve belirli aralıklarla Cesaret Pelerini basan hafif farm script'i.
+### 1. Ekran Görüntüleri Alın
 
-⚠️ Bilinen Sınırlamalar
-PVP Sunucu Korumaları: Rubinum gibi bazı sunucularda kullanılan anti-cheat/input engelleme sistemleri botun komut göndermesini engelleyebilir.
+* Giriş ekranı
+* Oyun içi (Metin taşı seçiliyken HP barı açık)
+* Karakter ölü ekranı
 
-Geliştirme Durumu: Kod mimarisinde bazı değerler sabitleşmiş (hardcoded) durumdadır ve modülerlik kısıtlıdır.
+---
+
+### 2. Koordinatları Belirleyin
+
+Paint.NET veya benzeri bir uygulama kullanarak aşağıdaki koordinatları tespit edin.
+
+| Alan               | Açıklama                          |
+| ------------------ | --------------------------------- |
+| `top-left`         | Oyun penceresinin sol üst pikseli |
+| `window-size`      | İstemci pencere boyutu            |
+| `stone-bar-close`  | Hedef HP barındaki kapatma butonu |
+| `mini-map`         | Minimap kapatma butonu            |
+| `hp`               | HP yazısının başlangıç noktası    |
+| `hp-rectangle`     | HP OCR alanı                      |
+| `revive-here`      | "Burada Yeniden Doğ" butonu       |
+| `revive-rectangle` | Ölüm ekranı OCR alanı             |
+| `account1-12`      | Giriş ekranındaki hesap butonları |
+| `channel1-8`       | Kanal seçim butonları             |
+| `next`             | Sonraki sayfa                     |
+| `ork`              | Ork Vadisi                        |
+| `red-forest`       | Kızıl Orman                       |
+| `area1-8`          | Harita seçim alanları             |
+
+---
+
+# 2. maps
+
+Haritaya özel yapılandırmaları içerir.
+
+| Ayar               | Açıklama                                         |
+| ------------------ | ------------------------------------------------ |
+| `name`             | Harita adı (clients ile eşleşmelidir)            |
+| `stone-sample`     | Aranacak Metin taşının örnek görselleri          |
+| `object-detection` | Kullanılacak nesne tespit yöntemi                |
+| `hl`               | En iyi eşleşmenin yüksek veya düşük skor mantığı |
+| `threshold`        | Eşleşme doğrulama eşiği                          |
+| `navigation`       | Haritaya ışınlanırken izlenecek menü adımları    |
+
+> **Not:** Mevcut sürümde taşın kaplaması yerine isminin ekran görüntüsü kullanılmaktadır.
+
+`actions.py` içerisindeki:
+
+```python
+loc[1] + 80
+```
+
+değeri, hedefleme sırasında kullanılan görsel ofsettir.
+
+Kaplama (texture) üzerinden tespit yapmak isterseniz bu değeri **0** olarak değiştirmeniz gerekir.
+
+---
+
+# 3. clients
+
+Her oyun istemcisi için ayrı bir yapılandırma dosyası bulunur.
+
+## account
+
+İstemciye ait bilgiler.
+
+* enabled
+* id
+* channel
+* username
+* map
+
+---
+
+## position
+
+Karakter seçme ekranındaki karakter konumu.
+
+---
+
+## navigation
+
+İstemciye ait navigasyon ayarları.
+
+### task-bar
+
+Windows görev çubuğundaki istemci sırası.
+
+> Görev çubuğunda pencere birleştirme özelliği kapalı olmalıdır.
+
+### top-left
+
+Oyun penceresinin sol üst koordinatı.
+
+### ring
+
+Işınlanma yüzüğünün bulunduğu kısayol.
+
+Örnek:
+
+```
+1
+2
+F1
+F2
+```
+
+### skills
+
+Yakılacak karakter becerileri.
+
+Örneğin:
+
+* Hava Kılıcı
+* Öfke
+* Aura
+* Büyülü Silah
+
+### horse-skills
+
+Karakter takıldığında kullanılacak binek becerileri.
+
+---
+
+# Kurulum
+
+## Gereksinimler
+
+* Python 3.7 veya üzeri
+* Windows İşletim Sistemi
+
+---
+
+## Gerekli Kütüphaneler
+
+Aşağıdaki komutu çalıştırarak gerekli Python paketlerini yükleyebilirsiniz.
+
+```bash
+pip install pillow opencv-python pyautogui numpy keyboard imutils pytesseract
+```
+
+---
+
+# Desteklenen Platform
+
+| Platform | Destek |
+| -------- | ------ |
+| Windows  | ✅      |
+| Linux    | ❌      |
+| macOS    | ❌      |
+
+---
+
+# Uyarı
+
+Bu proje eğitim ve araştırma amacıyla geliştirilmiştir.
+
+Oyunun kullanım şartlarını ihlal edebilecek otomasyon yazılımlarının kullanımı hesap yaptırımlarına neden olabilir. Projeyi kullanmadan önce ilgili sunucunun kurallarını incelemeniz tavsiye edilir.
