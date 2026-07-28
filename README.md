@@ -19,9 +19,11 @@
 ---
 
 </div>
+
 ⚠️ Donanım Uyarısı: Bot, ekran üzerindeki görüntüleri anlık işlemek için yüksek CPU gücü tüketir. Düşük donanımlı sistemlerde gecikmeler yaşanabilir.
 
 🎯 Özellikler
+
 🔐 Otomatik Oturum: Hesap bilgilerini kullanarak karakter seçimi ve oyuna giriş yapar.
 
 🗺️ Harita Gezinimi: Belirlenen rotaları izleyerek hedef haritaya ışınlanır.
@@ -35,6 +37,7 @@
 🖥️ Multi-Client: Aynı anda birden fazla oyun penceresini paralel olarak yönetebilir.
 
 💻 Gereksinimler & Bağımlılıklar
+
 İşletim Sistemi: Windows (Sadece Windows API kütüphaneleri desteklenmektedir)
 
 Python: v3.7 veya üzeri
@@ -42,6 +45,7 @@ Python: v3.7 veya üzeri
 Önerilen Ekran Çözünürlüğü: 1024x768 (800x600 çözünürlükte arayüz elemanları çakışabilir)
 
 🚀 Kurulum & Çalıştırma
+
 Oyun istemcilerini Login (Giriş) ekranında hazır tutun.
 
 Terminal/Komut satırını açarak projeyi başlatın:
@@ -52,6 +56,7 @@ Bot çalışmaya başladığında klavye ve fare müdahalesinde bulunmayın.
 Durdurmak için: Terminal penceresine geçip Ctrl + C kombinasyonunu kullanın.
 
 ⚙️ Yapılandırma (Configuration)
+
 Botun doğru çalışabilmesi için 3 temel konfigürasyon dizini kullanılır:
 
 • relatives/ : Ekran çözünürlüğünüze göre UI elemanlarının (minimap, hp bar vb.) pikselsel konum bağıntıları.
