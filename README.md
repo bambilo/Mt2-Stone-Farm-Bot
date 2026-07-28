@@ -1,14 +1,9 @@
 <div align="center">
 
 
-
 # 🗡️ Metin2 Stone Farm Bot
 
-
-
 **Python ve Görüntü işleme kullanılarak geliştirilmiş otomatik Metin Taş kesim otomasyonu.**
-
-
 
 [![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/)
 
@@ -19,14 +14,9 @@
 [![Status](https://img.shields.io/badge/status-Archive-orange.svg)](#)
 
 
-
 [Özellikler](#-özellikler) • [Gereksinimler](#-gereksinimler) • [Kurulum](#-kurulum--çalıştırma) • [Yapılandırma](#-yapılandırma-configuration) • [Sınırlamalar](#-bilinen-sınırlamalar)
 
-
-
 ---
-
-
 
 </div>
 ⚠️ Donanım Uyarısı: Bot, ekran üzerindeki görüntüleri anlık işlemek için yüksek CPU gücü tüketir. Düşük donanımlı sistemlerde gecikmeler yaşanabilir.
