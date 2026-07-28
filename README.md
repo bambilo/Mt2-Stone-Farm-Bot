@@ -4,6 +4,8 @@ Python ve Görüntü İşleme kullanılarak geliştirilmiş otomatik Metin Taş�
 
 Özellikler • Gereksinimler • Kurulum • Yapılandırma • Sınırlamalar
 
+</div>
+
 ⚠️ Donanım Uyarısı: Bot, ekran üzerindeki görüntüleri anlık işlemek için yüksek CPU gücü tüketir. Düşük donanımlı sistemlerde gecikmeler yaşanabilir.
 
 🎯 Özellikler
